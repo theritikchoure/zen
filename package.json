@@ -1,0 +1,28 @@
+{
+  "name": "@ritikchoure/touch",
+  "version": "1.0.0",
+  "description": "create any file with boilerplate",
+  "main": "index.js",
+  "bin": {
+    "touch": "./bin/bash"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theritikchoure/touch.git"
+  },
+  "keywords": [
+    "touch",
+    "create-files",
+    "theritikchoure",
+    "ritikchoure"
+  ],
+  "author": "theritikchoure",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theritikchoure/touch/issues"
+  },
+  "homepage": "https://github.com/theritikchoure/touch#readme"
+}
