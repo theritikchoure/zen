@@ -2,7 +2,7 @@ const fs = require('fs');
 const package = require('./package');
 const { options } = require('./options');
 
-// exports.createFileFunction = createFile;
+exports.createFileFunction = createFile;
 
 function createFile() {
     
@@ -31,4 +31,4 @@ function createFile() {
     }
 }
 
-createFile()
+// createFile()
