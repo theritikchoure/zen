@@ -1,5 +1,4 @@
 const fs = require('fs');
-const package = require('./package');
 const { options } = require('./options');
 
 exports.createFileFunction = createFile;
@@ -10,7 +9,11 @@ function createFile() {
     const filename = process.argv[2];
 
     if(filename === undefined || filename === null) {
-        console.log(package.version);
+        console.log("Commands of touch are: ")
+        console.log("");
+        console.log("touch <filename>.<extension>     create file for given extension");
+        console.log("touch -v                         to check version");
+        console.log("touch --version                  to check version");
         return;
     }
 
