@@ -6,7 +6,16 @@ module.exports = { options }
  * @param {*} value // Accepts string
  */
 function options(value) {
-    if(value === '-v' || value === '--version'){
-        return package.version;
+
+    switch(value) {
+        case '-v':
+            return package.version;
+
+        case '--version':
+            return package.version;
+
+        default:
+            return "Command doesn't exist";
     }
+
 }

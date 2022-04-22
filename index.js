@@ -1,37 +1,33 @@
-const fs = require('fs');
+const { createFile } = require('./features/CreateFile');
 const { options } = require('./options');
 
-exports.createFileFunction = createFile;
+exports.indexFunction = index;
 
-function createFile() {
+async function index(){
     
-    const html5 = fs.readFileSync(`${__dirname}/resources/index.html`)
-    const filename = process.argv[2];
-
-    if(filename === undefined || filename === null) {
-        console.log("Commands of touch are: ")
+    if(process.argv.length === 2) {
+        console.log("\n> Commands of touch are: ")
         console.log("");
         console.log("touch <filename>.<extension>     create file for given extension");
         console.log("touch -v                         to check version");
         console.log("touch --version                  to check version");
+        console.log('')
         return;
     }
 
-    const splitFilename = filename.split(".");
-    
-    if(splitFilename.length === 1) {
-        console.log(options(splitFilename[0]));
-        return;
+    const filename = process.argv[2];
+
+    if(process.argv[2]) {
+        const splitFilename = filename.split(".");
+        if(splitFilename.length === 1) {
+            console.log("> " + options(splitFilename[0]));
+            return;
+        }
     }
 
-    const lastIndex = splitFilename.length-1;
-    const extension = splitFilename[lastIndex];
-
-    if(extension === "html") {
-        fs.writeFileSync(`${process.cwd()}/${filename}`, html5)
-    } else {
-        fs.writeFileSync(`${process.cwd()}/${filename}`, '')
+    if(process.argv.length === 3) {
+        createFile(filename);
     }
 }
 
-// createFile()
+// index()
