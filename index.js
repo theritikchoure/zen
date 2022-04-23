@@ -1,7 +1,8 @@
-const { createFile } = require('./features/CreateFile');
 const { options } = require('./options');
+const { createFile } = require('./features/CreateFile');
 const { customResponse } = require('./helper/customResponse');
 const { renameFile } = require('./features/RenameFile');
+const { createFolder } = require('./features/CreateFolder');
 const { RED, NONE } = require('./helper/ansiColorCode');
 const { NAME } = require('./helper/constant');
 
@@ -33,6 +34,19 @@ async function index(){
                 default:
                     const filename = action;
                     createFile(filename);
+                    break;
+            }
+        }
+
+        if(process.argv.length === 4) {
+            switch(action) {
+                case '-dir':
+                    const foldername = process.argv[2];
+                    createFolder(foldername);
+                    break;
+        
+                default:
+                    customResponse(`${RED}> Command doesn't exist ${NONE}`);
                     break;
             }
         }
