@@ -4,14 +4,14 @@
   "description": "create any file with boilerplate",
   "main": "index.js",
   "bin": {
-    "touch": "./bin/bash"
+    "zen": "./bin/bash"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theritikchoure/touch.git"
+    "url": "git+https://github.com/theritikchoure/zen.git"
   },
   "keywords": [
     "touch",
@@ -22,7 +22,7 @@
   "author": "theritikchoure",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/theritikchoure/touch/issues"
+    "url": "https://github.com/theritikchoure/zen/issues"
   },
-  "homepage": "https://github.com/theritikchoure/touch#readme"
+  "homepage": "https://github.com/theritikchoure/zen#readme"
 }

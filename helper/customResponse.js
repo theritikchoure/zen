@@ -5,5 +5,5 @@ module.exports = { customResponse }
  * @param {*} value // Accepts string
  */
 function customResponse(message) {
-    console.log(`> ${message}`);
+    console.log(`${message}`);
 }

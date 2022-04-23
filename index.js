@@ -1,5 +1,8 @@
 const { createFile } = require('./features/CreateFile');
 const { options } = require('./options');
+const { customResponse } = require('./helper/customResponse');
+const { renameFile } = require('./features/RenameFile');
+const { RED, NONE } = require('./helper/ansiColorCode');
 
 exports.indexFunction = index;
 
@@ -14,19 +17,38 @@ async function index(){
         console.log('')
         return;
     }
+    
+    if(process.argv.length > 2) {
+        const action = process.argv[process.argv.length - 1];
 
-    const filename = process.argv[2];
+        if(process.argv.length === 3) {
+            const splitFilename = action.split(".");
 
-    if(process.argv[2]) {
-        const splitFilename = filename.split(".");
-        if(splitFilename.length === 1) {
-            console.log("> " + options(splitFilename[0]));
-            return;
+            switch(splitFilename.length) {
+                case 1:
+                    console.log("> " + options(splitFilename[0]));
+                    break;
+        
+                default:
+                    const filename = action;
+                    createFile(filename);
+                    break;
+            }
         }
-    }
 
-    if(process.argv.length === 3) {
-        createFile(filename);
+        if(process.argv.length === 5) {
+            switch(action) {
+                case '-mv':
+                    const oldFilename = process.argv[2];
+                    const newFilename = process.argv[3];
+                    renameFile(oldFilename, newFilename);
+                    break;
+        
+                default:
+                    customResponse(`${RED}> Command doesn't exist ${NONE}`);
+                    break;
+            }
+        }
     }
 }
 
