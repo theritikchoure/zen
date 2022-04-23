@@ -3,18 +3,19 @@ const { options } = require('./options');
 const { customResponse } = require('./helper/customResponse');
 const { renameFile } = require('./features/RenameFile');
 const { RED, NONE } = require('./helper/ansiColorCode');
+const { NAME } = require('./helper/constant');
 
 exports.indexFunction = index;
 
 async function index(){
     
     if(process.argv.length === 2) {
-        console.log("\n> Commands of touch are: ")
-        console.log("");
-        console.log("touch <filename>.<extension>     create file for given extension");
-        console.log("touch -v                         to check version");
-        console.log("touch --version                  to check version");
-        console.log('')
+        console.log(`\n> Commands of touch are: `)
+        console.log(``);
+        console.log(`${NAME} <filename>.<extension>     create file for given extension`);
+        console.log(`${NAME} -v                         to check version`);
+        console.log(`${NAME} --version                  to check version`);
+        console.log(``)
         return;
     }
     
