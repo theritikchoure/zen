@@ -9,7 +9,13 @@ module.exports = { renameFile }
  * @param {*} value // Accepts string
  */
 function renameFile(oldFilename, newFilename) {
-    if(!isFileExists(oldFilename)) {
+    if(!oldFilename) {
+        warningResponse(`old file name is required`);
+        return;
+    } else if(!newFilename) {
+        warningResponse(`new file name is required`);
+        return;
+    } else if(!isFileExists(oldFilename)) {
         warningResponse(`${oldFilename} doesn't exist`);
         return;
     } else if(isFileExists(newFilename)) {

@@ -1,21 +1,58 @@
 const package = require('./package');
+const { errorResponse, successResponse } = require('./helper/customResponse');
+const { WELCOME_SCREEN } = require('./helper/constant');
+const { createFile } = require('./features/CreateFile');
+const { createFolder } = require('./features/CreateFolder');
+const { renameFile } = require('./features/RenameFile');
+const { deleteFile } = require('./features/DeleteFile');
+const { FileExists } = require('./features/FileExists');
+
 module.exports = { options }
 
 /**
  * @desc Checks for options
- * @param {*} value // Accepts string
+ * @param {*} arguments // Accepts string
  */
-function options(value) {
+function options(arguments) {
 
-    switch(value) {
+    const command = arguments[2];
+
+    switch(command) {
+        case '-f':
+            createFile(arguments[3]);
+            break;
+        
+        case '-dir':
+            createFolder(arguments[3]);
+            break;
+
+        case '-rn':
+            renameFile(arguments[3], arguments[4]);
+            break;
+        
+        case '-rm':
+            deleteFile(arguments[3]);
+            break;
+
+        case '-e':
+            FileExists(arguments[3]);
+            break;
+
         case '-v':
-            return package.version;
+            successResponse(`> ${package.version}`);
+            break;
 
         case '--version':
-            return package.version;
+            successResponse(`> ${package.version}`);
+            break;
+        
+        case '--help':
+            WELCOME_SCREEN();
+            break;
 
         default:
-            return "Command doesn't exist";
+            errorResponse(`command does not exist`);
+            break;
     }
 
 }

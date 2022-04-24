@@ -2,10 +2,10 @@ const fs = require('fs');
 const readline = require('readline');
 const { stdin: input, stdout: output } = require('process');
 const html5 = fs.readFileSync(`${__dirname}/../resources/index.html`)
-const { options } = require('../options');
 const { isFileExists } = require('./FileExists');
-const { errorResponse } = require('../helper/customResponse');
+const { errorResponse, warningResponse } = require('../helper/customResponse');
 const { EXTENSIONS } = require('../helper/constant');
+const { YELLOW, NONE } = require('../helper/ansiColorCode');
 
 module.exports = { createFile }
 
@@ -15,12 +15,21 @@ module.exports = { createFile }
  */
 function createFile(filename) {
 
+    if(!filename) {
+        warningResponse(`file name is required`);
+        return;
+    }
+
     if(isFileExists(filename)) {
         const rl = readline.createInterface({ input, output });
-        rl.question(`${filename} already exists, do you want to overwrite it? y/N \n`, (answer) => {
+        rl.question(`> ${filename} already exists, ${YELLOW}do you want to overwrite it? y/N${NONE} \n`, (answer) => {
             
             switch(answer) {
                 case 'y':
+                    create(filename);
+                    break;
+                
+                case 'Y':
                     create(filename);
                     break;
         
@@ -45,12 +54,6 @@ function createFile(filename) {
 
 function create(filename) {
     const splitFilename = filename.split(".");
-    
-    if(splitFilename.length === 1) {
-        console.log(options(splitFilename[0]));
-        return;
-    }
-
     const extension = splitFilename[splitFilename.length-1];
 
     if(extension === "html" || extension === "htm") {

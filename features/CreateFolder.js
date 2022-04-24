@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { isFileExists } = require('./FileExists');
-const { customResponse } = require('../helper/customResponse');
+const { customResponse, warningResponse } = require('../helper/customResponse');
 const { YELLOW, NONE } = require('../helper/ansiColorCode');
 
 module.exports = { createFolder }
@@ -11,13 +11,16 @@ module.exports = { createFolder }
  */
 function createFolder(foldername) {
 
-    const splitFolderName = foldername.split(".");
+    if(!foldername) {
+        warningResponse(`folder name is required`);
+        return;
+    }
 
-    if(isFileExists(splitFolderName[0])) {
-        customResponse(`${YELLOW}${splitFolderName[0]} already exists${NONE}`);
+    if(isFileExists(foldername)) {
+        customResponse(`${YELLOW}${foldername} already exists${NONE}`);
         return;
     } else {
-        create(splitFolderName[0]);
+        create(foldername);
     }
 }
 

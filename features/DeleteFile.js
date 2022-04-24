@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { isFileExists } = require('./FileExists');
-const { customResponse } = require('../helper/customResponse');
+const { customResponse, warningResponse } = require('../helper/customResponse');
 const { YELLOW, NONE } = require('../helper/ansiColorCode');
 
 module.exports = { deleteFile }
@@ -10,6 +10,11 @@ module.exports = { deleteFile }
  * @param {*} value // Accepts string
  */
 function deleteFile(name) {
+
+    if(!name) {
+        warningResponse(`file/folder name is required`);
+        return;
+    }
 
     if(!isFileExists(name)) {
         customResponse(`${YELLOW}${name} does not exists${NONE}`);
