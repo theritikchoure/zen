@@ -1,4 +1,6 @@
-module.exports = { customResponse }
+const { YELLOW, RED, NONE } = require("./ansiColorCode");
+
+module.exports = { customResponse, errorResponse, warningResponse }
 
 /**
  * @desc response on console
@@ -6,4 +8,12 @@ module.exports = { customResponse }
  */
 function customResponse(message) {
     console.log(`${message}`);
+}
+
+function errorResponse(message) {
+    console.log(`${RED}> ${message} ${NONE}`);
+}
+
+function warningResponse(message) {
+    console.log(`${YELLOW}> ${message} ${NONE}`);
 }

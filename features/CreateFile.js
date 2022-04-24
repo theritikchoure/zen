@@ -4,7 +4,8 @@ const { stdin: input, stdout: output } = require('process');
 const html5 = fs.readFileSync(`${__dirname}/../resources/index.html`)
 const { options } = require('../options');
 const { isFileExists } = require('./FileExists');
-const { customResponse } = require('../helper/customResponse');
+const { errorResponse } = require('../helper/customResponse');
+const { EXTENSIONS } = require('../helper/constant');
 
 module.exports = { createFile }
 
@@ -30,7 +31,7 @@ function createFile(filename) {
                     break;
         
                 default:
-                    customResponse("Command doesn't exist");
+                    errorResponse("Command doesn't exist");
                     break;
             }
           
@@ -52,9 +53,11 @@ function create(filename) {
 
     const extension = splitFilename[splitFilename.length-1];
 
-    if(extension === "html") {
+    if(extension === "html" || extension === "htm") {
         fs.writeFileSync(`${process.cwd()}/${filename}`, html5)
-    } else {
+    } else if(EXTENSIONS.includes(extension)) {
         fs.writeFileSync(`${process.cwd()}/${filename}`, '')
+    } else {
+        errorResponse("invalid extension");
     }
 }

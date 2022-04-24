@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { isFileExists } = require('./FileExists');
-const { customResponse } = require('../helper/customResponse');
-const { RED, NONE } = require('../helper/ansiColorCode');
+const { warningResponse } = require('../helper/customResponse');
 
 module.exports = { renameFile }
 
@@ -10,12 +9,15 @@ module.exports = { renameFile }
  * @param {*} value // Accepts string
  */
 function renameFile(oldFilename, newFilename) {
-
-    if(isFileExists(oldFilename) && !isFileExists(newFilename)) {
-        rename(oldFilename, newFilename);
+    if(!isFileExists(oldFilename)) {
+        warningResponse(`${oldFilename} doesn't exist`);
+        return;
+    } else if(isFileExists(newFilename)) {
+        warningResponse(`${newFilename} already exists`);
         return;
     } else {
-        customResponse(`${RED}> File doesn't exist ${NONE}`);
+        rename(oldFilename, newFilename);
+        return;
     }
 }
 

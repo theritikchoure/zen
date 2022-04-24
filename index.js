@@ -1,9 +1,9 @@
 const { options } = require('./options');
 const { createFile } = require('./features/CreateFile');
-const { customResponse } = require('./helper/customResponse');
+const { errorResponse } = require('./helper/customResponse');
 const { renameFile } = require('./features/RenameFile');
 const { createFolder } = require('./features/CreateFolder');
-const { RED, NONE } = require('./helper/ansiColorCode');
+const { deleteFile } = require('./features/DeleteFile');
 const { NAME } = require('./helper/constant');
 
 exports.indexFunction = index;
@@ -44,23 +44,28 @@ async function index(){
                     const foldername = process.argv[2];
                     createFolder(foldername);
                     break;
+                
+                case '-rm':
+                    const name = process.argv[2];
+                    deleteFile(name);
+                    break;
         
                 default:
-                    customResponse(`${RED}> Command doesn't exist ${NONE}`);
+                    errorResponse("Command doesn't exist");
                     break;
             }
         }
 
         if(process.argv.length === 5) {
             switch(action) {
-                case '-mv':
+                case '-rn':
                     const oldFilename = process.argv[2];
                     const newFilename = process.argv[3];
                     renameFile(oldFilename, newFilename);
                     break;
         
                 default:
-                    customResponse(`${RED}> Command doesn't exist ${NONE}`);
+                    errorResponse("Command doesn't exist");
                     break;
             }
         }
