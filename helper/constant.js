@@ -17,6 +17,7 @@ function WELCOME_SCREEN() {
     console.log(`${NAME} -rn <oldfilename> > <newfilename>       rename old file name with new file name`);
     console.log(`${NAME} -rm <filename/foldername>               delete file or folder`);
     console.log(`${NAME} -e <filename/foldername>                file/folder exists or not`);
+    console.log(`${NAME} -r <filename>                           read file content in utf-8 encoding`);
     console.log(`${NAME} -v                                      to check version`);
     console.log(`${NAME} --version                               to check version`);
     console.log(`${NAME} --help                                  show this usage information`);

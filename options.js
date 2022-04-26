@@ -6,6 +6,7 @@ const { createFolder } = require('./features/CreateFolder');
 const { renameFile } = require('./features/RenameFile');
 const { deleteFile } = require('./features/DeleteFile');
 const { FileExists } = require('./features/FileExists');
+const { readFile } = require('./features//ReadFile');
 
 module.exports = { options }
 
@@ -36,6 +37,10 @@ function options(arguments) {
 
         case '-e':
             FileExists(arguments[3]);
+            break;
+        
+        case '-r':
+            readFile(arguments[3]);
             break;
 
         case '-v':

@@ -20,4 +20,4 @@ async function index(){
     }
 }
 
-// index()
+index()
