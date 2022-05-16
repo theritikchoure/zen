@@ -20,7 +20,7 @@ function read() {
     console.log(`\n\t Directory ${process.cwd()}:\n`);
     contentInsideFolder.forEach(file => {
         output.write(file);
-        output.write("\n");
+        output.write("\n"); 
     });
     output.write("\n");
 }

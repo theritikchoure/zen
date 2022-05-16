@@ -8,6 +8,7 @@ const { deleteFile } = require('./features/DeleteFile');
 const { FileExists } = require('./features/FileExists');
 const { readFile } = require('./features//ReadFile');
 const { readDirectory } = require('./features/ReadDirectory');
+const { createZip } = require('./features/CreateZip');
 
 module.exports = { options }
 
@@ -15,6 +16,7 @@ module.exports = { options }
  * @desc Checks for options
  * @param {*} arguments // Accepts string
  */
+
 function options(arguments) {
 
     const command = arguments[2];
@@ -47,6 +49,10 @@ function options(arguments) {
         case '-rd':
             readDirectory();
             break;
+        
+        case '-zip':
+            createZip(arguments[3]);
+            break;
 
         case '-v':
             successResponse(`> ${package.version}`);
@@ -64,5 +70,4 @@ function options(arguments) {
             errorResponse(`command does not exist`);
             break;
     }
-
 }
