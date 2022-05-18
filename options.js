@@ -9,6 +9,7 @@ const { FileExists } = require('./features/FileExists');
 const { readFile } = require('./features//ReadFile');
 const { readDirectory } = require('./features/ReadDirectory');
 const { createZip } = require('./features/CreateZip');
+const { createLocalServer } = require('./features/createLocalServer');
 
 module.exports = { options }
 
@@ -52,6 +53,10 @@ function options(arguments) {
         
         case '-zip':
             createZip(arguments[3]);
+            break;
+
+        case '-serve':
+            createLocalServer(arguments);
             break;
 
         case '-v':

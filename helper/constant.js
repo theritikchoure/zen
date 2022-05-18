@@ -21,6 +21,7 @@ function WELCOME_SCREEN() {
     console.log(`${NAME} -rd                                     list of all files and folder in current`);
     console.log(`                                            working directory`);
     console.log(`${NAME} -zip <filename>                         create zip file for given filename`);
+    console.log(`${NAME} -serve                                  create local server for static files`);
     console.log(`${NAME} -v                                      check version`);
     console.log(`${NAME} --version                               check version`);
     console.log(`${NAME} --help                                  show this usage information`);
@@ -28,4 +29,23 @@ function WELCOME_SCREEN() {
     return;
 }
 
-module.exports = { NAME, EXTENSIONS, WELCOME_SCREEN }
+const MIME_TYPE = {
+    ".ico": "image/x-icon",
+    ".html": "text/html",
+    ".js": "text/javascript",
+    ".json": "application/json",
+    ".css": "text/css",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".wav": "audio/wav",
+    ".mp3": "audio/mpeg",
+    ".svg": "image/svg+xml",
+    ".pdf": "application/pdf",
+    ".doc": "application/msword",
+    ".eot": "application/vnd.ms-fontobject",
+    ".ttf": "application/font-sfnt",
+};
+
+const PORT = 8080;
+
+module.exports = { NAME, EXTENSIONS, WELCOME_SCREEN, MIME_TYPE, PORT };
