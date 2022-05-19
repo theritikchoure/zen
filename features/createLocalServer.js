@@ -7,7 +7,7 @@ const fs = require("fs");
 const path = require("path");
 
 const { customResponse, warningResponse } = require("../helper/customResponse");
-const { YELLOW, NONE, RED, GREEN } = require("../helper/ansiColorCode");
+const { YELLOW, NONE, RED, GREEN, BLUE } = require("../helper/ansiColorCode");
 const { MIME_TYPE, PORT } = require("../helper/constant");
 
 module.exports = { createLocalServer };
@@ -25,8 +25,26 @@ function createLocalServer(arguments) {
 
     // Parsing the requested URL
     const parsedUrl = url.parse(req.url);
-
-    console.log('-', parsedUrl.pathname)
+    let method;
+    switch (req.method) {
+      case 'GET':
+        method = `${YELLOW}${req.method}${NONE}`
+        break;
+      case 'POST':
+        method = `${GREEN}${req.method}${NONE}`
+        break;
+      case 'PUT':
+        method = `${BLUE}${req.method}${NONE}`
+        break;
+      case 'DELETE':
+        method = `${RED}${req.method}${NONE}`
+        break;
+    
+      default:
+        method = `${req.method}`
+        break;
+    }
+    console.log(method, '-', parsedUrl.pathname)
 
     const sanitizePath = path
       .normalize(parsedUrl.pathname)
@@ -77,12 +95,15 @@ function createLocalServer(arguments) {
   });
 
   server.listen(port, () => {
-    console.log(`${GREEN}✓${NONE} Server listening on port ${YELLOW}${port}${NONE}`);
+    console.log(`${GREEN}✓${NONE} Server listening on port ${YELLOW}${port}${NONE} \n`);
   });
 
   server.on("error", (err) => {
     if (err.code === "EADDRINUSE") {
       console.log(`${RED}X${NONE} Error: ${err.port} is already in use, use different port`);
+      console.log(`you can change the default ${err.port} with other port using below command`);
+      console.log(``);
+      console.log(`zen -serve -p <portnumber>`);
     }
   });
 }
