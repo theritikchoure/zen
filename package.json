@@ -1,6 +1,6 @@
 {
   "name": "@ritikchoure/zen",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "create any file with boilerplate",
   "main": "index.js",
   "bin": {
