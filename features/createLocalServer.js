@@ -7,8 +7,14 @@ const fs = require("fs");
 const path = require("path");
 
 const { customResponse, warningResponse } = require("../helper/customResponse");
-const { YELLOW, NONE, RED, GREEN, BLUE } = require("../helper/ansiColorCode");
+const { YELLOW, NONE, RED, GREEN, BLUE, NAVI_BLUE } = require("../helper/ansiColorCode");
 const { MIME_TYPE, PORT } = require("../helper/constant");
+
+//Get IPv4 Address - to access server using ip address
+const ip = Object.values(require("os").networkInterfaces())
+        .flat()
+        .filter((item) => !item.internal && item.family === "IPv4")
+        .find(Boolean).address;
 
 module.exports = { createLocalServer };
 
@@ -95,7 +101,12 @@ function createLocalServer(arguments) {
   });
 
   server.listen(port, () => {
+    console.log(`\n> ${process.cwd()}\n`);
     console.log(`${GREEN}✓${NONE} Server listening on port ${YELLOW}${port}${NONE} \n`);
+    console.log(`-------------------------------------------------------`)
+    console.log(`\tLocal: \t\t ${NAVI_BLUE}http://localhost:${port}${NONE}`)
+    console.log(`\tExternal: \t ${NAVI_BLUE}http://${ip}:${port}${NONE}`)
+    console.log(`-------------------------------------------------------`)
   });
 
   server.on("error", (err) => {

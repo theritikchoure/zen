@@ -8,7 +8,8 @@ const EXTENSIONS = ["doc", "docx", "odt", "pdf", "xls", "xlsx", "ods", "ppt", "p
                     "rhtml", "shtml", "xml", "rss", "svg", "cgi", "dll", "atom", "ejs"];
 
 function WELCOME_SCREEN() {
-    console.log(`\n> $ zen [options]`);
+    process.stdout.write('Usage: \n')
+    process.stdout.write(`\t zen <command> [options]`);
     console.log(``);
     console.log(`Options: `);
     console.log(``);
