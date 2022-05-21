@@ -5,6 +5,7 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const path = require("path");
+const chokidar = require("chokidar");
 
 const { customResponse, warningResponse } = require("../helper/customResponse");
 const { YELLOW, NONE, RED, GREEN, BLUE, NAVI_BLUE } = require("../helper/ansiColorCode");
@@ -31,26 +32,8 @@ function createLocalServer(arguments) {
 
     // Parsing the requested URL
     const parsedUrl = url.parse(req.url);
-    let method;
-    switch (req.method) {
-      case 'GET':
-        method = `${YELLOW}${req.method}${NONE}`
-        break;
-      case 'POST':
-        method = `${GREEN}${req.method}${NONE}`
-        break;
-      case 'PUT':
-        method = `${BLUE}${req.method}${NONE}`
-        break;
-      case 'DELETE':
-        method = `${RED}${req.method}${NONE}`
-        break;
-    
-      default:
-        method = `${req.method}`
-        break;
-    }
-    console.log(method, '-', parsedUrl.pathname)
+    let method = req.method;
+    let urlPath = parsedUrl.pathname;
 
     const sanitizePath = path
       .normalize(parsedUrl.pathname)
@@ -73,9 +56,10 @@ function createLocalServer(arguments) {
         let msg = `File index.html not found! \n\nThe index.html file might have been removed, had its name changes, or is temporarily unavailalbe`;
 
         res.end(msg);
+        logger(method, urlPath, res.statusCode)
         return;
       } else {
-        readFile(res, pathname);
+        readFile(res, pathname, method, urlPath);
       }
       return;
     }
@@ -89,10 +73,11 @@ function createLocalServer(arguments) {
       // If the file is not found, return 404
       res.statusCode = 404;
       res.end(`File ${pathname} not found!`);
+      logger(method, urlPath, res.statusCode)
       return;
     } else {
       // Read file from file system limit to the current directory only.
-      readFile(res, pathname);
+      readFile(res, pathname, method, urlPath);
       return;
     }
 
@@ -107,6 +92,7 @@ function createLocalServer(arguments) {
     console.log(`\tLocal: \t\t ${NAVI_BLUE}http://localhost:${port}${NONE}`)
     console.log(`\tExternal: \t ${NAVI_BLUE}http://${ip}:${port}${NONE}`)
     console.log(`-------------------------------------------------------`)
+    require('child_process').exec(`start http://localhost:${port}/`);
   });
 
   server.on("error", (err) => {
@@ -120,11 +106,12 @@ function createLocalServer(arguments) {
 }
 
 // Read file from file system limit to the current directory only.
-const readFile = (res, pathname) => {
+const readFile = (res, pathname, method, urlPath) => {
   fs.readFile(pathname, function (err, data) {
     if (err) {
       res.statusCode = 500;
       res.end(`Error in getting the file.`);
+      logger(method, urlPath, res.statusCode)
       return;
     } else {
       // Based on the URL path, extract the file extension. Ex .js, .doc, ...
@@ -133,7 +120,32 @@ const readFile = (res, pathname) => {
       // If the file is found, set Content-type and send data
       res.setHeader("Content-type", MIME_TYPE[ext] || "text/plain");
       res.end(data);
+      logger(method, urlPath, res.statusCode)
       return;
     }
   });
 };
+
+const logger = (method, urlPath, statusCode) => {
+  let requestedMethod;
+  switch (method) {
+    case 'GET':
+      requestedMethod = `${YELLOW}${method}${NONE}`
+      break;
+    case 'POST':
+      requestedMethod = `${GREEN}${method}${NONE}`
+      break;
+    case 'PUT':
+      requestedMethod = `${BLUE}${method}${NONE}`
+      break;
+    case 'DELETE':
+      requestedMethod = `${RED}${method}${NONE}`
+      break;
+  
+    default:
+      requestedMethod = `${method}`
+      break;
+  }
+
+  console.log(requestedMethod, urlPath, statusCode);
+}
