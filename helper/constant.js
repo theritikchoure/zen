@@ -23,6 +23,7 @@ function WELCOME_SCREEN() {
     console.log(`                                            working directory`);
     console.log(`${NAME} -zip <filename>                         create zip file for given filename`);
     console.log(`${NAME} -serve                                  create local server for static files`);
+    console.log(`${NAME} -qr <url>                               download qr code of given url`);
     console.log(`${NAME} -v                                      check version`);
     console.log(`${NAME} --version                               check version`);
     console.log(`${NAME} --help                                  show this usage information`);

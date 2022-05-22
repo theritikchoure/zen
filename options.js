@@ -10,6 +10,7 @@ const { readFile } = require('./features//ReadFile');
 const { readDirectory } = require('./features/ReadDirectory');
 const { createZip } = require('./features/CreateZip');
 const { createLocalServer } = require('./features/createLocalServer');
+const { createQR } = require('./features/CreateQRCode');
 
 module.exports = { options }
 
@@ -57,6 +58,10 @@ function options(arguments) {
 
         case '-serve':
             createLocalServer(arguments);
+            break;
+        
+        case '-qr':
+            createQR(arguments[3]);
             break;
 
         case '-v':

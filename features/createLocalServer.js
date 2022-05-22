@@ -5,7 +5,6 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const path = require("path");
-const chokidar = require("chokidar");
 
 const { customResponse, warningResponse } = require("../helper/customResponse");
 const { YELLOW, NONE, RED, GREEN, BLUE, NAVI_BLUE } = require("../helper/ansiColorCode");
